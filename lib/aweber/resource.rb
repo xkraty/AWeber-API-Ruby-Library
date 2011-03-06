@@ -120,6 +120,10 @@ module AWeber
     def <=>(other)
       @id <=> other.id
     end
+    
+    def inspect
+      "#<#{self.class.to_s} id=#{id}>"
+    end
 
   private
 

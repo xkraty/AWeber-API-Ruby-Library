@@ -37,4 +37,10 @@ describe AWeber::Collection do
     lists = @lists.find_by_resource_type_link("https://api.aweber.com/1.0/#list")
     lists.length.should == 3
   end
+  
+  it "should add new resources" do
+    resource = AWeber::Resource.new(@aweber)
+    @lists[98765] = resource
+    @lists[98765].should == resource
+  end
 end

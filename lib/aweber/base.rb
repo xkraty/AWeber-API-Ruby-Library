@@ -19,6 +19,10 @@ module AWeber
       oauth.delete(expand(uri))
     end
     
+    def post(uri, body={})
+      oauth.post(uri, body)
+    end
+    
     def put(uri, body={})
       oauth.put(uri, body.to_json, {"Content-Type" => "application/json"})
     end

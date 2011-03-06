@@ -4,45 +4,92 @@ Official AWeber API gem.
 
 h2. Installation
 
-* @gem install aweber@
+@gem install aweber@
 
-h2. Quick Start
+h2. Getting Started
 
-First, go to "http://labs.aweber.com":http://labs.aweber.com and sign up for a free AWeber Labs account. This is how you register apps and get OAuth keys.
+This guide assumes you have nothing previously setup to work with the AWeber API. It will walk through registering an account, creating an app and everything up to the point where you'll actually start working with data.
 
-bc.. # Register an app and use it's Consumer key and secret:
-oauth = AWeber::OAuth.new("consumer_key", "consumer_secret")
+If you don't want to bother with all the account setup stuff, you can look in the "examples":http://github.com/aweber/aweber-ruby/tree/master/examples/ directory for just example code.
 
-# Go to the URL the following outputs.
-oauth.request_token.authorize_url 
+*Requires a normal AWeber account (not a Labs account)*
 
-# Authorize your account and copy the verification code.
-oauth.authorize_with_verifier("verification_code")
+h3. 1. Register an AWeber Labs Account
 
-# Grab an AWeber::Base object and get movin'
-aweber = AWeber::Base.new(oauth)
-aweber.account.lists[123456].name
+Head to "http://labs.aweber.com":http://labs.aweber.com and sign up for a free AWeber Labs account. This is how you register apps and get OAuth keys.
 
-p. Take a look at "examples":http://github.com/aweber/aweber-ruby/tree/master/examples/ for more examples.
+h3. 2. Create an App
 
-h2. Getting Data
+Once logged in, _Create a New App_. Once created, it will show you the Consumer Key and Secret for that app.
 
-Every piece of data from AWeber's API stems from an Account object. From there you access associated resources in the same way you would an ActiveRecord accosication:
+h3. 3. Write Some Code
 
-bc. account.lists #=> #<AWeber::Collection(AWeber::Resource::List)>
-account.lists[1]  #=> #<AWeber::Resource::List>
+h4. The OAuth Handler
 
-h2. Modifying Subscribers
+bc. oauth = AWeber::OAuth.new('consumer_key', 'consumer_secret')
 
-Currently, only certain attributes of Subscribers are writable:
+h4. Authorize an Account
+
+Open, what the following outputs, in a browser and use your AWeber account credentials. This will give your app permission to work with your account's data:
+
+bc. oauth.request_token.verification_url
+
+h4. Verification Code
+
+After you do the above step, it will output a "Verification Code". Copy this and verify your @oauth@ object:
+
+bc. oauth.authorize_with_verifier('verification_code')
+
+h4. Grab an AWeber::Base
+
+bc. aweber = AWeber::Base.new(oauth)
+
+This object is how you access data from your account. @aweber.account@ is your account object which is the stem for all other resources. Take a look at the next section, "Usage", to find out how to work with different resources.
+
+h2. Usage
+
+h3. Resource Traversal
+
+Getting resource data is much like traversing associations in ActiveRecord. Everything starts with the @account@ object and goes from there:
+
+bc.. aweber.account.lists           #=> #<AWeber::Collection>
+aweber.account.lists[123]      #=> #<AWeber::Resource::List>
+aweber.account.lists[123].name #=> "WhateverList"
+
+h3. Collections
+
+@aweber.account.lists@ in the example above would be a Collection. Collections act like a normal Hash. Resources of a collection are accessed normally, using @[]@ with the key being the ID of the resource.
+
+h4. find_by_*
+
+Collections also support ActiveRecord style @find_by_*@ methods:
+
+bc. aweber.account.lists.find_by_name("testlist")
+
+h3. Resources
+
+Resources are elements of a Collection. A single list resource would be retrieved with:
+
+bc. aweber.account.lists[1234]
+
+h2. Updating Resources
+
+Currently, subscribers are the only resource you can update via the API. Everything else is read only for the time being.
+
+h3. Updateable Subscribers
 
 * name
 * misc_notes
-* email (yes email)
+* email
 * status
 * last_followup_message_number_sent
 * custom_fields (Hash of key/value pairs)
 * ad_tracking
+
+h3. Moving Subscriber From List to List
+
+bc. new_list = aweber.account.lists[1234]
+subscriber.list = new_list
 
 h3. Example
 

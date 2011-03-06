@@ -8,7 +8,7 @@ module AWeber
       api_attr :custom_fields, :writable => true
       api_attr :ad_tracking,   :writable => true
       api_attr :last_followup_message_number_sent, :writable => true
-      
+
       api_attr :ip_address
       api_attr :is_verified
       api_attr :last_followup_sent_at
@@ -18,11 +18,27 @@ module AWeber
       api_attr :unsubscribed_at
       api_attr :verified_at
       api_attr :last_followup_sent_link
-      
+
       has_one :last_followup_sent
-      
+
       alias_attribute :is_verified?, :is_verified
       alias_attribute :notes, :misc_notes
+
+      def list=(list)
+        client.post(self_link, {
+          "ws.op"     => "move",
+          "list_link" => list.self_link
+        })
+        move_to(list)
+      end
+
+    private
+
+      def move_to(list)
+        old_list = self_link.match(%r[lists/(\d+)/])[1]
+        client.account.lists[old_list.to_i].subscribers[id] = nil
+        list.subscribers[id] = self
+      end
     end
   end
 end

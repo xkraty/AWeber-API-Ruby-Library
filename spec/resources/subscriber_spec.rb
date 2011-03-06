@@ -22,7 +22,7 @@ describe AWeber::Resources::Subscriber do
   it { should respond_to :subscription_url }
   it { should respond_to :unsubscribed_at }
   it { should respond_to :verified_at }
-  
+
   its(:writable_attrs) { should include :name }
   its(:writable_attrs) { should include :misc_notes }
   its(:writable_attrs) { should include :email }
@@ -30,4 +30,19 @@ describe AWeber::Resources::Subscriber do
   its(:writable_attrs) { should include :custom_fields }
   its(:writable_attrs) { should include :ad_tracking }
   its(:writable_attrs) { should include :last_followup_message_number_sent }
+
+  it "should move lists" do
+    list = "http://api.aweber.com/1.0/accounts/1/lists/987654"
+    json = { "ws.op" => "move", "list_link" => list }
+
+    aweber.account.lists[1550685].stub(:self_link).and_return(list)
+    oauth.should_receive(:post).with(subject.self_link, json)
+    subject.list = aweber.account.lists[1550685]
+  end
+
+  it "should update list when moving" do
+    new_list     = aweber.account.lists[1550685]
+    subject.list = new_list
+    new_list.subscribers[subject.id].should == subject
+  end
 end

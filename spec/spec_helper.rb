@@ -50,3 +50,5 @@ route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/links/\d+/clicks\?], fi
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages\?], fixture("messages.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages/\d+/opens\?], fixture("opens.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages/\d+/tracked_events\?], fixture("tracked_events.json")
+
+route :post, %r[/accounts/\d+/lists/\d+/subscribers/\d+], "201 Created"

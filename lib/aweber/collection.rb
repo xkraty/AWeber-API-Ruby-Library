@@ -52,6 +52,10 @@ module AWeber
     def [](id)
       @entries[id] ||= fetch_entry(id)
     end
+    
+    def []=(key, resource)
+      @entries[key] = resource
+    end
 
     def each
       (1..@total_size).each { |n| yield get_entry(n) }
@@ -86,7 +90,7 @@ module AWeber
     end
 
     def base_path
-      URI.parse(@next_collection_link).path
+      URI.parse(@next_collection_link).path if @next_collection_link
     end
 
     def find_by(_attr, *args)
