@@ -16,6 +16,12 @@ module AWeber
 
     class << self
       attr_accessor :writable_attrs
+      attr_accessor :path
+      
+      def basepath(path)
+        @path = path
+      end
+      
       # Works the same as +alias_method+, but for attributes created via
       # +attr*+ methods.
       #
@@ -93,6 +99,10 @@ module AWeber
     alias_attribute :etag, :http_etag
     alias_attribute :link, :self_link
     alias_attribute :resource_type, :resource_type_link
+    
+    def_delegators :client, :get, :post, :put
+
+    attr_reader :parent
 
     def initialize(client, data={})
       @client = client
@@ -119,6 +129,10 @@ module AWeber
 
     def <=>(other)
       @id <=> other.id
+    end
+    
+    def path
+      parent and "#{parent.path}/#{id}" or id.to_s
     end
 
   private

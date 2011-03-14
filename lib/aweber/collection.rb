@@ -32,6 +32,7 @@ module AWeber
     attr_reader :prev_collection_link
     attr_reader :resource_type_link
     attr_reader :total_size
+    attr_reader :parent
 
     alias_method :size,   :total_size
     alias_method :length, :total_size
@@ -45,8 +46,15 @@ module AWeber
       @client  = client
       @klass   = klass
       @entries = {}
-      create_entries(data["entries"])
+      create_entries(data["entries"]) if data.include?("entries")
       @_entries = @entries.to_a
+    end
+
+    def search(params={})
+      params = params.map { |k, v| "#{k}=#{v}" }.join("&")
+      uri    = "#{path}?ws.op=search&#{params}"
+
+      self.class.new(client, @klass, client.get(uri).merge(:parent => parent))
     end
 
     def [](id)
@@ -59,6 +67,10 @@ module AWeber
 
     def inspect
       "#<AW::Collection(#{@klass.to_s}) size=\"#{size}\">"
+    end
+    
+    def path
+      parent and parent.path.to_s + @klass.path.to_s or @klass.path.to_s
     end
 
   private
@@ -73,7 +85,7 @@ module AWeber
     end
 
     def fetch_entry(id)
-      @klass.new(client, get(File.join(base_path, id.to_s)))
+      @klass.new(client, get(path).merge(:parent => self))
     end
 
     def fetch_next_group(amount=20)
