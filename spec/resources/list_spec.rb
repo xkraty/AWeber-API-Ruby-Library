@@ -1,8 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe AWeber::Resources::Message do
+describe AWeber::Resources::List do
   include BaseObjects
   subject { aweber.account.lists[1] }
+  
+  its(:path) { should == "/accounts/1/lists/1" }
   
   it { should respond_to :campaigns_collection_link }
   it { should respond_to :http_etag }
@@ -17,10 +19,12 @@ describe AWeber::Resources::Message do
   it { should respond_to :followups }
   
   it "should should have a collection of broadcasts" do
-    subject.broadcasts.map { |id, b| b.self_link }.all? { |b| b =~ /b\d+$/ }.should be_true
+    subject.broadcasts.should be_an AWeber::Collection
+    subject.broadcasts[1].should be_an AWeber::Resources::Campaign
   end
   
   it "should should have a collection of followups" do
-    subject.followups.map { |id, f| f.self_link }.all? { |f| f =~ /f\d+$/ }.should be_true
+    subject.followups.should be_an AWeber::Collection
+    subject.followups[1].should be_an AWeber::Resources::Campaign
   end
 end

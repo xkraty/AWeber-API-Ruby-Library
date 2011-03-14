@@ -1,6 +1,8 @@
 module AWeber
   module Resources
     class Subscriber < Resource
+      basepath "/subscribers"
+      
       api_attr :name,          :writable => true
       api_attr :misc_notes,    :writable => true
       api_attr :email,         :writable => true

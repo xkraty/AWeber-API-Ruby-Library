@@ -1,6 +1,8 @@
 module AWeber
   module Resources
     class Account < Resource
+      basepath "/accounts"
+      
       api_attr :lists_collection_link
       api_attr :integrations_collection_link
     

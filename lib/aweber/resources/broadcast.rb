@@ -1,6 +1,8 @@
 module AWeber
   module Resources
     class Broadcast < Resource
+      basepath "/campaigns"
+      
       api_attr :click_tracking_enabled
       api_attr :content_type
       api_attr :is_archived

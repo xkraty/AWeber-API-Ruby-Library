@@ -1,6 +1,8 @@
 module AWeber
   module Resources
     class Message < Resource
+      basepath "/messages"
+      
       api_attr :event_time
       api_attr :last_opened
       api_attr :total_opens

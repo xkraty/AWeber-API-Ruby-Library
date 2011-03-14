@@ -37,8 +37,8 @@ describe AWeber::Collection do
     lists.length.should == 3
   end
   
-  it "should not have an empty path" do
-    @lists.path.should be_empty
+  it "should have a path to its collection alone" do
+    @lists.path.should == "/lists"
   end
   
   it "should create resource with itself as a parent" do
@@ -60,8 +60,8 @@ describe AWeber::Collection do
       @root       = AWeber::Collection.new(@aweber, FakeParent)
       @parent     = AWeber::Resource.new(@aweber, :id => 1, :parent => @root)
       @collection = AWeber::Collection.new(@aweber, FakeChild, :parent => @parent)
-      path        = "/parents/1/children?ws.op=search&name=default123456"
-      @aweber.should_receive(:get).with(path).and_return({})
+      path        = "/parents/1/children?ws.op=find&name=default123456"
+      @aweber.should_receive(:get).with(path).and_return({ "entries" => [] })
     end
     
     it "should search the API" do

@@ -85,7 +85,8 @@ module AWeber
 
           resource_link = instance_variable_get("@#{name}_collection_link")
           klass         = AWeber.get_class(name)
-          collection    = Collection.new(client, klass, client.get(resource_link))
+          response      = client.get(resource_link).merge(:parent => self)
+          collection    = Collection.new(client, klass, response)
           instance_variable_set("@#{name}", collection)
         end
       end
@@ -133,6 +134,10 @@ module AWeber
     
     def path
       parent and "#{parent.path}/#{id}" or id.to_s
+    end
+    
+    def inspect
+      %(#<AWeber::Resources::#{self.class} id="#{id}" />)
     end
 
   private

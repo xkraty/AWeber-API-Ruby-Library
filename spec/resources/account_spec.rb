@@ -4,6 +4,8 @@ describe AWeber::Resources::Account do
   include BaseObjects
   subject { aweber.account }
   
+  its(:path) { should == "/accounts/1" }
+  
   it { should respond_to :id }
   it { should respond_to :http_etag }
   it { should respond_to :self_link }

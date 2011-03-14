@@ -1,6 +1,8 @@
 module AWeber
   module Resources
     class Link < Resource
+      basepath "/links"
+      
       api_attr :total_clicks
       api_attr :total_unique_clicks
       api_attr :url

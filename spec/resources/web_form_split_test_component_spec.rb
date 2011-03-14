@@ -4,6 +4,8 @@ describe AWeber::Resources::WebFormSplitTestComponent do
   include BaseObjects
   subject { aweber.account.lists[1].web_form_split_tests[1242668124].components["612763163-513600765"] }
   
+  its(:path) { should == "/accounts/1/lists/1/web_form_split_tests/1242668124/components/612763163-513600765" }
+  
   it { should respond_to :conversion_percentage }
   it { should respond_to :http_etag }
   it { should respond_to :id }

@@ -22,6 +22,14 @@ module AWeber
     def put(uri, body={})
       oauth.put(uri, body.to_json, {"Content-Type" => "application/json"})
     end
+    
+    def path
+      ""
+    end
+    
+    def inspect
+      "#<AWeber::Base />"
+    end
 
   private
     
@@ -34,7 +42,10 @@ module AWeber
     end
 
     def accounts
-      @accounts ||= Collection.new(self, Resources::Account, get("/accounts"))
+      return @accounts if @accounts
+
+      response  = get("/accounts").merge(:parent => self)
+      @accounts = Collection.new(self, Resources::Account, response)
     end
 
     def expand(uri)
@@ -42,8 +53,9 @@ module AWeber
       url = []
       url << AWeber.api_endpoint
       url << API_VERSION unless parsed.path.include? API_VERSION
-      url << parsed.path
-      File.join(*url)
+      url = [url.join("/"), parsed.path].join
+      url = [url, parsed.query].join("?") if parsed.query
+      url
     end
 
     def parse(response)
