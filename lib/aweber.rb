@@ -13,6 +13,7 @@ module AWeber
     :clicks               => :Click,
     :links                => :Link,
     :lists                => :List,
+    :campaigns            => :Campaign,
     :messages             => :Message,
     :opens                => :Open,
     :subscribers          => :Subscriber,

@@ -1,14 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-class FakeResource < AWeber::Resource
-  attr_accessor :foo
-  api_attr :name, :writable => true
-  alias_attribute :bar, :foo
-  has_many :lists
-end
-
 describe AWeber::Resource do
-  
   before :each do
     @oauth  = AWeber::OAuth.new("token", "secret")
     @aweber = AWeber::Base.new(@oauth)
@@ -72,9 +64,18 @@ describe AWeber::Resource do
   
   it "should send a JSON respresentation of the object on save" do
     resource = FakeResource.new(@aweber)
-    @oauth.should_receive(:put).with(resource.self_link, "{\"name\":\"Bob\"}", anything)
+    @oauth.should_receive(:put).with(resource.link, "{\"name\":\"Bob\"}", anything)
     resource.name = "Bob"
     resource.save
   end
   
+  it "should return the id as path when no parent is supplied" do
+    FakeResource.new(@aweber, :id => 1).path.should == "1"
+  end
+  
+  it "should have a parent" do
+    parent = AWeber::Collection.new(@aweber, FakeParent)
+    child  = AWeber::Resource.new(@aweber, :id => 2, :parent => parent)
+    child.path.should == "/parents/2"
+  end
 end

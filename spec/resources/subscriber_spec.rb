@@ -23,6 +23,8 @@ describe AWeber::Resources::Subscriber do
   it { should respond_to :unsubscribed_at }
   it { should respond_to :verified_at }
 
+  its(:path)           { should == "/accounts/1/lists/1/subscribers/50723026" }
+
   its(:writable_attrs) { should include :name }
   its(:writable_attrs) { should include :misc_notes }
   its(:writable_attrs) { should include :email }

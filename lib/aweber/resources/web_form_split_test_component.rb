@@ -1,6 +1,8 @@
 module AWeber
   module Resources
     class WebFormSplitTestComponent < Resource
+      basepath "/components"
+      
       api_attr :conversion_percentage
       api_attr :is_active
       api_attr :name

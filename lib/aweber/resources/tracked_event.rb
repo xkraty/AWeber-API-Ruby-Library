@@ -1,6 +1,8 @@
 module AWeber
   module Resources
     class TrackedEvent < Resource
+      basepath "/tracked_events"
+      
       api_attr :event_time
       api_attr :type
       api_attr :subscriber_link

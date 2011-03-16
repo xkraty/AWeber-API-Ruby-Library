@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe AWeber::Collection do
-  
   before :each do
     @oauth  = AWeber::OAuth.new("token", "secret")
     @aweber = AWeber::Base.new(@oauth)
@@ -38,9 +37,43 @@ describe AWeber::Collection do
     lists.length.should == 3
   end
   
-  it "should add new resources" do
-    resource = AWeber::Resource.new(@aweber)
-    @lists[98765] = resource
-    @lists[98765].should == resource
+  it "should have a path to its collection alone" do
+    @lists.path.should == "/lists"
+  end
+  
+  it "should create resource with itself as a parent" do
+    collection = AWeber::Collection.new(@aweber, FakeParent)
+    @aweber.stub(:get).and_return({ :name => "Bob" })
+    collection[1].parent.should == collection
+  end
+  
+  it "should pass path request through its parent" do
+    root   = AWeber::Collection.new(@aweber, FakeParent)
+    leaf   = AWeber::Resource.new(@aweber, :id => 1, :parent => root)
+    branch = AWeber::Collection.new(@aweber, FakeChild, :parent => leaf)
+    leafy  = AWeber::Resource.new(@aweber, :id => 2, :parent => branch)
+    leafy.path.should == "/parents/1/children/2"
+  end
+  
+  context "when searching" do
+    before do
+      @root       = AWeber::Collection.new(@aweber, FakeParent)
+      @parent     = AWeber::Resource.new(@aweber, :id => 1, :parent => @root)
+      @collection = AWeber::Collection.new(@aweber, FakeChild, :parent => @parent)
+      path        = "/parents/1/children?ws.op=find&name=default123456"
+      @aweber.should_receive(:get).with(path).and_return({ "entries" => [] })
+    end
+    
+    it "should search the API" do
+      @collection.search(:name => "default123456")
+    end
+    
+    it "should return a new collection" do
+      @collection.search(:name => "default123456").should be_an AWeber::Collection
+    end
+    
+    it "should return a new collection with the same parent" do
+      @collection.search(:name => "default123456").parent.should be @collection.parent
+    end
   end
 end
