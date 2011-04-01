@@ -41,6 +41,8 @@ route :any, "https://auth.aweber.com/1.0/access_token",  "oauth_token=fake&oauth
 route :get, %r[/accounts\?], fixture("accounts.json")
 route :get, %r[/accounts/\d+/lists\?], fixture("lists.json")
 route :get, %r[/accounts/\d+/lists/\d+\?], fixture("list.json")
+route :get, %r[/accounts/\d+/lists/\d+/custom_fields\?], fixture("custom_fields.json")
+route :get, %r[/accounts/\d+/lists/\d+/custom_fields/\d+\?], fixture("custom_field.json")
 route :get, %r[/accounts/\d+/lists/\d+/subscribers\?], fixture("subscribers.json")
 route :get, %r[/accounts/\d+/lists/\d+/web_forms\?], fixture("web_forms.json")
 route :get, %r[/accounts/\d+/lists/\d+/web_form_split_tests\?], fixture("web_form_split_tests.json")

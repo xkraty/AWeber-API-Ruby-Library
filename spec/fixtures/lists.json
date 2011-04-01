@@ -11,7 +11,8 @@
         "http_etag": "\"4ab41e60d14ea138a4522b3d2896942b7335c13c - ca5feee2b7fbb6febfca8af5541541ea960aaedb\"",
         "self_link": "https://api.aweber.com/1.0/accounts/1/lists/1553018",
         "resource_type_link": "https://api.aweber.com/1.0/#list",
-        "web_forms_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1553018/web_forms"
+        "web_forms_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1553018/web_forms",
+        "custom_fields_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1553018/custom_fields"
     },
     {
         "campaigns_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550685/campaigns",
@@ -22,7 +23,8 @@
         "http_etag": "\"685c00e3983add5e4efb5ca3bc7294e247f6e9fe - ca5feee2b7fbb6febfca8af5541541ea960aaedb\"",
         "self_link": "https://api.aweber.com/1.0/accounts/1/lists/1550685",
         "resource_type_link": "https://api.aweber.com/1.0/#list",
-        "web_forms_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550685/web_forms"
+        "web_forms_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550685/web_forms",
+        "custom_fields_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550685/custom_fields"
     },
     {
         "campaigns_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550679/campaigns",
@@ -33,6 +35,7 @@
         "http_etag": "\"0aaa38a50287df08ccb74c7f13fca8679aab688a - ca5feee2b7fbb6febfca8af5541541ea960aaedb\"",
         "self_link": "https://api.aweber.com/1.0/accounts/1/lists/1550679",
         "resource_type_link": "https://api.aweber.com/1.0/#list",
-        "web_forms_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550679/web_forms"
+        "web_forms_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550679/web_forms",
+        "custom_fields_collection_link": "https://api.aweber.com/1.0/accounts/1/lists/1550679/custom_fields"
     }]
 }

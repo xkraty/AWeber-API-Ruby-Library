@@ -12,8 +12,10 @@ module AWeber
       api_attr :subscribers_collection_link
       api_attr :web_forms_collection_link
       api_attr :web_form_split_tests_collection_link
+      api_attr :custom_fields_collection_link
       
       has_many :campaigns
+      has_many :custom_fields
       has_many :subscribers
       has_many :web_forms
       has_many :web_form_split_tests
