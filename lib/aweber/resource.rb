@@ -137,7 +137,7 @@ module AWeber
     end
     
     def inspect
-      %(#<AWeber::Resources::#{self.class} id="#{id}" />)
+      %(#<#{self.class} id="#{id}" />)
     end
 
   private

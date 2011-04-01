@@ -1,10 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe AWeber::Collection do
-  before :each do
+  before do
     @oauth  = AWeber::OAuth.new("token", "secret")
     @aweber = AWeber::Base.new(@oauth)
-    data    = JSON.parse(fixture("lists.json"))
+    data    = JSON.parse(fixture("lists.json")).merge(:parent => @aweber.account)
     @lists  = AWeber::Collection.new(@aweber, AWeber::Resources::List, data)
   end
   
@@ -38,7 +38,7 @@ describe AWeber::Collection do
   end
   
   it "should have a path to its collection alone" do
-    @lists.path.should == "/lists"
+    @lists.path.should == "/accounts/1/lists"
   end
   
   it "should create resource with itself as a parent" do
@@ -74,6 +74,28 @@ describe AWeber::Collection do
     
     it "should return a new collection with the same parent" do
       @collection.search(:name => "default123456").parent.should be @collection.parent
+    end
+  end
+  
+  describe "when creating" do
+    let(:params) {{ "ws.op" => "create", :name => "foo" }}
+    
+    it "should set the operation to 'create'" do
+      @aweber.should_receive(:post).with(@lists.path, params)
+      @lists.create(:name => "foo")
+    end
+    
+    it "should return false if the create failed" do
+      @oauth.should_receive(:post).and_return(nil)
+      @lists.create(:name => "foo").should == false
+    end
+    
+    it "should return the new object if the create succeeded" do
+      @lists.create(:name => "foo").should be_an AWeber::Resource
+    end
+    
+    it "should have the collection as a parent" do
+      @lists.create(:name => "foo").parent.should == @lists
     end
   end
 end

@@ -58,6 +58,19 @@ module AWeber
 
       self.class.new(client, @klass, response)
     end
+    
+    def create(attrs={})
+      params   = attrs.merge("ws.op" => "create")
+      response = client.post(path, params)
+      
+      return false unless response.is_a? Net::HTTPCreated
+      
+      response = JSON.parse(response.body)
+      resource = get(response["location"]).merge(:parent => self)
+      resource = @klass.new(client, resource)
+      
+      self[resource.id] = resource
+    end
 
     def [](id)
       @entries[id] ||= fetch_entry(id)

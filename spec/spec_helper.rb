@@ -11,8 +11,8 @@ def aweber_url(url)
   url =~ /https/ ? url : File.join(AWeber.api_endpoint, "1.0", url)
 end
 
-def route(method, uri, response)
-  FakeWeb.register_uri(method, uri, :body => response)
+def route(method, uri, body="", opts={})
+  FakeWeb.register_uri(method, uri, opts.merge(:body => body))
 end
 
 def fixture(filename)
@@ -40,6 +40,7 @@ route :any, "https://auth.aweber.com/1.0/access_token",  "oauth_token=fake&oauth
 
 route :get, %r[/accounts\?], fixture("accounts.json")
 route :get, %r[/accounts/\d+/lists\?], fixture("lists.json")
+route :get, %r[/accounts/\d+/lists/\d+\?], fixture("list.json")
 route :get, %r[/accounts/\d+/lists/\d+/subscribers\?], fixture("subscribers.json")
 route :get, %r[/accounts/\d+/lists/\d+/web_forms\?], fixture("web_forms.json")
 route :get, %r[/accounts/\d+/lists/\d+/web_form_split_tests\?], fixture("web_form_split_tests.json")
@@ -52,4 +53,5 @@ route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages\?], fixture("m
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages/\d+/opens\?], fixture("opens.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages/\d+/tracked_events\?], fixture("tracked_events.json")
 
-route :post, %r[/accounts/\d+/lists/\d+/subscribers/\d+], "201 Created"
+route :post, %r[/accounts/\d+/lists\?], %[{"location":"https://api.aweber.com/1.0/accounts/1/lists/1550679"}], :status => ["201", "Created"]
+route :post, %r[/accounts/\d+/lists/\d+/subscribers/\d+], "201 Created", :status => ["201", "Created"]

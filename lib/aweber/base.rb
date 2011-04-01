@@ -20,7 +20,7 @@ module AWeber
     end
     
     def post(uri, body={})
-      oauth.post(uri, body)
+      oauth.post(expand(uri), body)
     end
     
     def put(uri, body={})
