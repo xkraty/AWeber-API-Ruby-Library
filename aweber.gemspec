@@ -11,38 +11,9 @@ Gem::Specification.new do |s|
   s.homepage     = "http://github.com/aweber/AWeber-API-Ruby-Library"
   
   s.require_path = "lib"
-  s.files        = [
-    "aweber.gemspec",
-    "examples/with_access_token.rb",
-    "examples/your_account.rb",
-    "Gemfile",
-    "Gemfile.lock",
-    "lib/aweber.rb",
-    "lib/aweber/base.rb",
-    "lib/aweber/collection.rb",
-    "lib/aweber/oauth.rb",
-    "lib/aweber/resource.rb",
-    "lib/aweber/resources.rb",
-    "lib/aweber/resources/account.rb",
-    "lib/aweber/resources/broadcast.rb",
-    "lib/aweber/resources/click.rb",
-    "lib/aweber/resources/followup.rb",
-    "lib/aweber/resources/integration.rb",
-    "lib/aweber/resources/link.rb",
-    "lib/aweber/resources/list.rb",
-    "lib/aweber/resources/message.rb",
-    "lib/aweber/resources/open.rb",
-    "lib/aweber/resources/subscriber.rb",
-    "lib/aweber/resources/tracked_event.rb",
-    "lib/aweber/resources/web_form.rb",
-    "lib/aweber/resources/web_form_split_test.rb",
-    "lib/aweber/resources/web_form_split_test_component.rb",
-    "LICENSE",
-    "Rakefile",
-    "README.textile",
-  ]
+  s.files        = `git ls-files`.split("\n")
+  s.test_files   = `git ls-files -- spec/*`.split("\n")
   
-  s.test_files   = Dir["spec/**/*"]
   s.extra_rdoc_files = ["LICENSE", "README.textile"]
 
   s.add_dependency "oauth"
