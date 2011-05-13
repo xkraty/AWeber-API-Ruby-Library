@@ -32,7 +32,7 @@ h4. Authorize an Account
 
 Open, what the following outputs, in a browser and use your AWeber account credentials. This will give your app permission to work with your account's data:
 
-bc. oauth.request_token.verification_url
+bc. oauth.request_token.authorize_url
 
 h4. Verification Code
 
