@@ -134,10 +134,6 @@ module AWeber
       super
     end
     
-    def h(str)
-      CGI.escape(str.to_s)
-    end
-
     def client
       @client
     end
