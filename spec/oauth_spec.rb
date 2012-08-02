@@ -45,11 +45,6 @@ describe AWeber::OAuth do
     aweber.request_token.should == rtoken
   end
   
-  it "should set the callback url" do
-    oauth = AWeber::OAuth.new('token', 'secret', :callback_url => "http://example.com")
-    oauth.callback_url.should == "http://example.com"
-  end
-  
   it "should be able to authorize with a verifier code" do
     consumer = double('oauth consumer')
     rtoken   = double('request token')

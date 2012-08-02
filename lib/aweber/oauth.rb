@@ -4,12 +4,9 @@ module AWeber
 
     def_delegators :access_token, :get, :post, :put, :delete
 
-    attr_accessor :callback_url
-
     def initialize(consumer_token, consumer_secret, options={})
       @consumer_token  = consumer_token
       @consumer_secret = consumer_secret
-      @callback_url    = options[:callback_url]
     end
 
     def consumer
