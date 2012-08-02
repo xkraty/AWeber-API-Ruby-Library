@@ -98,4 +98,5 @@ describe AWeber::Collection do
       @lists.create(:name => "foo").parent.should == @lists
     end
   end
+
 end

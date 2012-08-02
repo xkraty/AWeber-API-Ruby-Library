@@ -111,7 +111,7 @@ module AWeber
         instance_variable_set("@#{key}", value) if respond_to? key
       end
     end
-    
+
     def delete
       client.delete(@self_link)
     end
@@ -136,6 +136,10 @@ module AWeber
       parent and "#{parent.path}/#{id}" or id.to_s
     end
     
+    def uri
+      self_link.gsub(AWeber.api_url, '')
+    end
+
     def inspect
       %(#<#{self.class} id="#{id}" />)
     end
@@ -144,6 +148,10 @@ module AWeber
 
     def client
       @client
+    end
+
+    def h(str)
+      CGI.escape(str.to_s)
     end
 
   end

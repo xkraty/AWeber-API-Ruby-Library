@@ -78,4 +78,5 @@ describe AWeber::Resource do
     child  = AWeber::Resource.new(@aweber, :id => 2, :parent => parent)
     child.path.should == "/parents/2"
   end
+
 end
