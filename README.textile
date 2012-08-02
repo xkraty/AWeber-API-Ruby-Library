@@ -34,6 +34,10 @@ Open, what the following outputs, in a browser and use your AWeber account crede
 
 bc. oauth.request_token.authorize_url
 
+A callback url may also be passed by setting the :oauth_callback parameter:
+
+bc. oauth.request_token(:oauth_callback => 'http://www.example.com').authorize_url
+
 h4. Verification Code
 
 After you do the above step, it will output a "Verification Code". Copy this and verify your @oauth@ object:
@@ -44,7 +48,25 @@ h4. Grab an AWeber::Base
 
 bc. aweber = AWeber::Base.new(oauth)
 
-This object is how you access data from your account. @aweber.account@ is your account object which is the stem for all other resources. Take a look at the next section, "Usage", to find out how to work with different resources.
+This object is how you access data from your account. @aweber.account@ is your account object which is the stem for all other resources.
+
+h4. What if I don't want to verify every time?
+
+After verifying once, the @oauth@ object contains an @oauth.access_token.token@ and and @oauth.access_token.secret@ which may be used to authorize your application without having to verify via url:
+
+bc. ...
+oauth.authorize_with_verifier('verification_code')
+puts 'Access token: ' + oauth.access_token.token
+puts 'Access token secret: ' + oauth.access_token.secret
+
+The token and secret can then be saved, and authorization can be performed as follows:
+
+bc. require 'aweber'
+oauth = AWeber::OAuth.new('consumer_key', 'consumer_secret')
+#Rather than authorizing with the verification code, we use the token and secret
+oauth.authorize_with_access(YOUR_ACCESS_TOKEN, YOUR_ACCESS_TOKEN_SECRET)
+aweber = AWeber::Base.new(oauth)
+
 
 h2. Usage
 
@@ -53,7 +75,7 @@ h3. Resource Traversal
 Getting resource data is much like traversing associations in ActiveRecord. Everything starts with the @account@ object and goes from there:
 
 bc.. aweber.account.lists           #=> #<AWeber::Collection>
-aweber.account.lists[123]      #=> #<AWeber::Resource::List>
+aweber.account.lists[123]      #=> #<AWeber::Resource::List>     #123 represents the list id
 aweber.account.lists[123].name #=> "WhateverList"
 
 h3. Collections
@@ -71,6 +93,10 @@ h3. Resources
 Resources are elements of a Collection. A single list resource would be retrieved with:
 
 bc. aweber.account.lists[1234]
+
+h3. Why can't I access the subscriber data?
+
+If you are unable to access the data associated with your subscribers, it is likely that you have not enabled subscriber access permissions for your application. To do so, follow the directions at: https://labs.aweber.com/docs/permissions. These changes won't take effect until you renew your access tokens.
 
 h2. Updating Resources
 
@@ -97,6 +123,14 @@ bc. subscriber = account.lists[654321].subscribers[123456]
 subscriber.name = "New Name"
 subscriber.save
 
+h2. Adding Subscribers
+
+bc. new_subscriber = {}
+new_subscriber["email"] = "fake@example.com"
+new_subscriber["name"] = "My New Subscriber"
+aweber.account.lists.find_by_name("mylistname").subscribers.create(new_subscriber)]
+#Or alternatively: aweber.account.lists[list_id].subscribers.create(new_subscriber)]
+
 h2. Note on Patches/Pull Requests
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
@@ -109,4 +143,4 @@ h2. Note on Patches/Pull Requests
 
 h2. Copyright
 
-Copyright (c) 2010-2011 AWeber Communications, Inc. See LICENSE for more detail.
+Copyright (c) 2010-2012 AWeber Communications, Inc. See LICENSE for more detail.
