@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["LICENSE", "README.textile"]
 
   s.add_dependency "oauth"
-  s.add_dependency "json_pure"
+  s.add_dependency "json"
   
   s.add_development_dependency "fakeweb"
   s.add_development_dependency "rspec", "~> 2.11.0"
