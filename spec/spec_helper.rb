@@ -55,5 +55,5 @@ route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages\?], fixture("m
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages/\d+/opens\?], fixture("opens.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages/\d+/tracked_events\?], fixture("tracked_events.json")
 
-route :post, %r[/accounts/\d+/lists\?], %[{"location":"https://api.aweber.com/1.0/accounts/1/lists/1550679"}], :status => ["201", "Created"]
+route :post, %r[/accounts/\d+/lists\?], '', :location => 'https://api.aweber.com/1.0/accounts/1/lists/1550679', :status => ["201", "Created"]
 route :post, %r[/accounts/\d+/lists/\d+/subscribers/\d+], "201 Created", :status => ["201", "Created"]
