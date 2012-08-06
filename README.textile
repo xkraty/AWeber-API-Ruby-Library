@@ -128,8 +128,8 @@ h2. Adding Subscribers
 bc. new_subscriber = {}
 new_subscriber["email"] = "fake@example.com"
 new_subscriber["name"] = "My New Subscriber"
-aweber.account.lists.find_by_name("mylistname").subscribers.create(new_subscriber)]
-#Or alternatively: aweber.account.lists[list_id].subscribers.create(new_subscriber)]
+aweber.account.lists.find_by_name("mylistname").subscribers.create(new_subscriber)
+#Or alternatively: aweber.account.lists[list_id].subscribers.create(new_subscriber)
 
 h2. Note on Patches/Pull Requests
  
