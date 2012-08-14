@@ -22,7 +22,7 @@ module AWeber
   #    messages.find_by_total_opens(0)
   #    #=> { "45697" => #<Message>, "12345" => #<Message> }
   #
-  # Collections are paginated in groups of 20.
+  # Collections are paginated in groups of 100.
   #
   class Collection < Resource
     include Enumerable
@@ -108,8 +108,8 @@ module AWeber
       @klass.new(client, get(path).merge(:parent => self))
     end
 
-    def fetch_next_group(amount=20)
-      path = "#{ base_path }?ws.start=#{ @_entries.size }&ws.size=#{ amount }"
+    def fetch_next_group()
+      path = "#{ base_path }?ws.start=#{ @_entries.size }"
       self.class.new(client, @klass, get(path)).entries.to_a
     end
 
