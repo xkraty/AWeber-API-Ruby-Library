@@ -1,4 +1,4 @@
-h1. AWeber API Gem
+h1. AWeber API Gem "!https://secure.travis-ci.org/aweber/AWeber-API-Ruby-Library.png!":http://travis-ci.org/aweber/AWeber-API-Ruby-Library
 
 Official AWeber API gem.
 
