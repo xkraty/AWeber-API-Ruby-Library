@@ -5,7 +5,9 @@ describe AWeber::Collection do
     @oauth  = AWeber::OAuth.new("token", "secret")
     @aweber = AWeber::Base.new(@oauth)
     data    = JSON.parse(fixture("lists.json")).merge(:parent => @aweber.account)
+    sub_data = JSON.parse(fixture("subscriber.json")).merge(:parent => @aweber.account)
     @lists  = AWeber::Collection.new(@aweber, AWeber::Resources::List, data)
+    @subscribers = AWeber::Collection.new(@aweber, AWeber::Resources::Subscriber, data)
   end
   
   it "should create classes from the one passed into initialize" do
@@ -97,6 +99,13 @@ describe AWeber::Collection do
     it "should have the collection as a parent" do
       @lists.create(:name => "foo").parent.should == @lists
     end
+
+    it "should set operation to create when creating subscriber" do
+      expected = { "ws.op" => "create", :name => "foo", :custom_fields => {"Signature" => '1234'} }
+      @aweber.should_receive(:post).with(@subscribers.path, expected)
+      @subscribers.create(:name => "foo", :custom_fields => {"Signature" => '1234'})
+    end
+
   end
 
 end
