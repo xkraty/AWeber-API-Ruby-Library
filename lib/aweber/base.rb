@@ -42,6 +42,12 @@ module AWeber
         raise NotFoundError, "Invalid resource uri.", caller
       elsif response && response.body == "NotAuthorizedError"
         raise OAuthError, "Could not authorize OAuth credentials.", caller
+      elsif response.is_a? Net::HTTPForbidden
+          if JSON.parse(response.body)['error']['message'].start_with?("Rate limit")
+              raise RateLimitError, "Too many API requests per minute.", caller
+          elsif JSON.parse(response.body)['error']['message'].start_with?("Method requires access")
+              raise ForbiddenRequestError, "Method requires extended permissions.", caller
+          end
       end
     end
 
