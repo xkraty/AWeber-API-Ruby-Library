@@ -1,6 +1,6 @@
 require "forwardable"
 require "oauth"
-require "json/pure"
+require "json"
 
 module AWeber
   API_VERSION  = "1.0".freeze

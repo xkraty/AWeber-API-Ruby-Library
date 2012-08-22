@@ -60,7 +60,14 @@ module AWeber
     end
     
     def create(attrs={})
-      params   = attrs.merge("ws.op" => "create")
+      params = attrs.merge("ws.op" => "create")
+
+      if params.has_key?('custom_fields')
+        if params['custom_fields'].is_a?(Hash)
+            params['custom_fields'] = params['custom_fields'].to_json
+        end
+      end
+
       response = client.post(path, params)
 
       return false unless response.is_a? Net::HTTPCreated
