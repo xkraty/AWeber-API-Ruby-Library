@@ -10,7 +10,7 @@ h2. Getting Started
 
 This guide assumes you have nothing previously setup to work with the AWeber API. It will walk through registering an account, creating an app and everything up to the point where you'll actually start working with data.
 
-If you don't want to bother with all the account setup stuff, you can look in the "examples":http://github.com/aweber/aweber-ruby/tree/master/examples/ directory for just example code.
+If you don't want to bother with all the account setup stuff, you can look in the "examples":https://github.com/aweber/AWeber-API-Ruby-Library/tree/master/examples directory for just example code.
 
 *Requires a normal AWeber account (not a Labs account)*
 
