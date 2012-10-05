@@ -84,12 +84,13 @@ describe AWeber::Collection do
     
     it "should set the operation to 'create'" do
       @aweber.should_receive(:post).with(@lists.path, params)
-      @lists.create(:name => "foo")
+      expect { @lists.create(:name => "foo")}.to raise_error
+
     end
     
-    it "should return false if the create failed" do
+    it "should return raise CreationError if the create failed" do
       @oauth.should_receive(:post).and_return(nil)
-      @lists.create(:name => "foo").should == false
+      expect {@lists.create(:name => "foo")}.to raise_error
     end
     
     it "should return the new object if the create succeeded" do
@@ -103,7 +104,7 @@ describe AWeber::Collection do
     it "should set operation to create when creating subscriber" do
       expected = { "ws.op" => "create", :name => "foo", :custom_fields => {"Signature" => '1234'} }
       @aweber.should_receive(:post).with(@subscribers.path, expected)
-      @subscribers.create(:name => "foo", :custom_fields => {"Signature" => '1234'})
+      expect {@subscribers.create(:name => "foo", :custom_fields => {"Signature" => '1234'})}.to raise_error
     end
 
   end

@@ -61,6 +61,7 @@ module AWeber
   class UnknownRequestError < Exception; end
   class RateLimitError < Exception; end
   class ForbiddenRequestError < Exception; end
+  class CreationError < Exception; end
 end
 
 $LOAD_PATH << File.dirname(__FILE__) unless $LOAD_PATH.include?(File.dirname(__FILE__))
