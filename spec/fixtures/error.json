@@ -1,9 +1,0 @@
-{
-    "error": 
-        {
-            "status": 400,
-            "documentation_url": "https://labs.aweber.com/docs/troubleshooting#badrequest",
-            "message": "email: Subscriber already subscribed.",
-            "type": "WebServiceError"
-        }
-}
