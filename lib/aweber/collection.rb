@@ -51,6 +51,11 @@ module AWeber
     end
 
     def search(params={})
+      if params.has_key?('custom_fields')
+        if params['custom_fields'].is_a?(Hash)
+            params['custom_fields'] = params['custom_fields'].to_json
+        end
+      end
       params   = params.map { |k,v| "#{h(k)}=#{h(v)}" }.join("&")
       uri      = "#{path}?ws.op=find&#{params}"
       response = client.get(uri).merge(:parent => parent)
@@ -58,7 +63,7 @@ module AWeber
 
       self.class.new(client, @klass, response)
     end
-    
+
     def create(attrs={})
       params = attrs.merge("ws.op" => "create")
 
@@ -70,18 +75,24 @@ module AWeber
 
       response = client.post(path, params)
 
-      return false unless response.is_a? Net::HTTPCreated
+      if response.is_a? Net::HTTPCreated
+        resource = get(response["location"]).merge(:parent => self)
+        resource = @klass.new(client, resource)
 
-      resource = get(response["location"]).merge(:parent => self)
-      resource = @klass.new(client, resource)
-
-      self[resource.id] = resource
+        self[resource.id] = resource
+      else
+        if response
+            raise CreationError, JSON.parse(response.body)['error']['message'], caller
+        else
+            raise CreationError, "No response received", caller
+        end
+      end
     end
 
     def [](id)
       @entries[id] ||= fetch_entry(id)
     end
-    
+
     def []=(key, resource)
       @entries[key] = resource
     end
@@ -93,7 +104,7 @@ module AWeber
     def inspect
       "#<AW::Collection(#{@klass.to_s}) size=\"#{size}\">"
     end
-    
+
     def path
       parent and parent.path.to_s + @klass.path.to_s or @klass.path.to_s
     end
@@ -140,7 +151,7 @@ module AWeber
       end
       super
     end
-    
+
     def client
       @client
     end
