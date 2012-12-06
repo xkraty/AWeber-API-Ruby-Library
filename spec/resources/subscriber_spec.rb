@@ -42,6 +42,16 @@ describe AWeber::Resources::Subscriber do
     subject.list = aweber.account.lists[1550685]
   end
 
+
+  it "should move lists with followup" do
+    list = "http://api.aweber.com/1.0/accounts/1/lists/987654"
+    json = { "ws.op" => "move", "list_link" => list, "last_followup_message_number_sent" => 1}
+
+    aweber.account.lists[1550685].stub(:self_link).and_return(list)
+    oauth.should_receive(:post).with(subject.self_link, json)
+    subject.move(aweber.account.lists[1550685], 1)
+  end
+
   it "should update list when moving" do
     new_list     = aweber.account.lists[1550685]
     subject.list = new_list

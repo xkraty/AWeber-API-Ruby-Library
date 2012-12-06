@@ -34,6 +34,20 @@ module AWeber
         move_to(list)
       end
 
+      def move(list, last_followup_sent=nil)
+        move_args = {
+                      "ws.op"     => "move",
+                      "list_link" => list.self_link
+                    }
+
+        if last_followup_sent
+          move_args['last_followup_message_number_sent'] = last_followup_sent
+        end
+
+        r = client.post(self_link, move_args)
+        move_to(list)
+      end
+
     private
 
       def move_to(list)
