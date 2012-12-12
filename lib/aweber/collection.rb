@@ -50,6 +50,10 @@ module AWeber
       @_entries = @entries.to_a
     end
 
+    def find(params={})
+        return search(params)
+    end 
+
     def search(params={})
       if params.has_key?('custom_fields')
         if params['custom_fields'].is_a?(Hash)

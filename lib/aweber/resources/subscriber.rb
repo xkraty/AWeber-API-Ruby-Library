@@ -48,6 +48,13 @@ module AWeber
         move_to(list)
       end
 
+      def get_activity()
+        uri      = "#{path}?ws.op=getActivity"
+        response = client.get(uri).merge(:parent => self)
+        response["total_size"] ||= response["entries"].size
+        Collection.new(client, SubscriberActivity, response)
+      end
+
     private
 
       def move_to(list)
