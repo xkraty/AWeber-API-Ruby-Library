@@ -18,9 +18,11 @@ module AWeber
       api_attr :total_unsubscribes
       api_attr :twitter_account_link
 
+      api_attr :stats_collection_link
       api_attr :links_collection_link
       api_attr :messages_collection_link
 
+      has_many :stats
       has_many :links
       has_many :messages
 

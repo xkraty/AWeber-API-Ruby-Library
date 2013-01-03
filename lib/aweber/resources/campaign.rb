@@ -23,9 +23,11 @@ module AWeber
       api_attr :twitter_account_link
       api_attr :links_collection_link
       api_attr :messages_collection_link
+      api_attr :stats_collection_link
       
       has_many :links
       has_many :messages
+      has_many :stats
       
       alias_attribute :is_archived?, :is_archived
       alias_attribute :is_click_tracking_enabled?, :click_tracking_enabled

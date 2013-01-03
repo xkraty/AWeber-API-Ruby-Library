@@ -50,6 +50,8 @@ route :get, %r[/accounts/\d+/lists/\d+/web_form_split_tests/\d+/components\?], f
 route :get, %r[/accounts/\d+/integrations\?], fixture("integrations.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns\?], fixture("campaigns.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/links\?], fixture("links.json")
+route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/stats\?], fixture("stats.json")
+route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/stats/\d+/total_clicks\?], fixture("stat.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/links/\d+/clicks\?], fixture("clicks.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages\?], fixture("messages.json")
 route :get, %r[/accounts/\d+/lists/\d+/campaigns/[\d\w]+/messages/\d+/opens\?], fixture("opens.json")
