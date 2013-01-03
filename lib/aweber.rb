@@ -17,6 +17,7 @@ module AWeber
     :campaigns            => :Campaign,
     :messages             => :Message,
     :opens                => :Open,
+    :stats                => :Stat,
     :subscribers          => :Subscriber,
     :tracked_events       => :TrackedEvent,
     :integrations         => :Integration,

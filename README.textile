@@ -143,4 +143,4 @@ h2. Note on Patches/Pull Requests
 
 h2. Copyright
 
-Copyright (c) 2010-2012 AWeber Communications, Inc. See LICENSE for more detail.
+Copyright (c) 2010-2013 AWeber Communications, Inc. See LICENSE for more detail.
