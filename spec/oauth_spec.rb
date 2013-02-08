@@ -44,7 +44,7 @@ describe AWeber::OAuth do
     aweber = AWeber::OAuth.new('token', 'secret')
     aweber.request_token.should == rtoken
   end
-  
+
   it "should be able to authorize with a verifier code" do
     consumer = double('oauth consumer')
     rtoken   = double('request token')
@@ -88,4 +88,10 @@ describe AWeber::OAuth do
     aweber.post("/foo")
   end
 
+  it "should be able to set a request token" do
+    rtoken   = double('request token')
+    oauth = AWeber::OAuth.new('token', 'secret')
+    oauth.request_token = rtoken
+    oauth.request_token.should == rtoken
+  end
 end
