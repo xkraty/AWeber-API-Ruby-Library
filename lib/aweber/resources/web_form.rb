@@ -11,6 +11,9 @@ module AWeber
       api_attr :total_unique_displays
       api_attr :type
       api_attr :unique_conversion_percentage
+      api_attr :html_source_link
+      api_attr :javascript_source_link
+
     end
   end
 end

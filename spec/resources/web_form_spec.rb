@@ -18,4 +18,7 @@ describe AWeber::Resources::WebForm do
   it { should respond_to :total_unique_displays }
   it { should respond_to :type }
   it { should respond_to :unique_conversion_percentage }
+  it { should respond_to :html_source_link }
+  it { should respond_to :javascript_source_link }
+
 end
