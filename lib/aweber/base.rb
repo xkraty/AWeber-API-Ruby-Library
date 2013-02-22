@@ -38,7 +38,7 @@ module AWeber
     # Authorize an app with an auth code from 1.0/oauth/authorize_app/app_id
     #
     # @param [string] auth_code The authorization code received from 
-    # /authorize_app to be used for autorization.
+    # /authorize_app to be used for authorization.
     #
     def self.authorize_with_authorization_code(auth_code)
       consumer_token, consumer_secret, request_token, request_secret, verifier =

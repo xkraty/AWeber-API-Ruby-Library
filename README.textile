@@ -84,7 +84,7 @@ After you do the above step, it will output a “Verification Code”. Copy this
 
 bc. aweber = AWeber::Base.authorize_with_authorization_code('My|Authcode|Pasted|Here')
 
-You can now use the aweber object to access data from the account that authroized your app!
+You can now use the aweber object to access data from the account that authorized your app!
 
 h2. Usage
 
