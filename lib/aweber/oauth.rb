@@ -27,6 +27,14 @@ module AWeber
       @request_token ||= consumer.get_request_token(options)
     end
 
+    # Set a Request Token
+    #
+    #  @param [Request Token] request_token the oauth request token to be set.
+    #
+    def request_token=(request_token)
+      @request_token = request_token
+    end
+
     # Get an Access Token from a Request Token using the 
     # +verifier+ code.
     #

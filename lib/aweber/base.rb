@@ -35,6 +35,24 @@ module AWeber
       "#<AWeber::Base />"
     end
 
+    # Authorize an app with an auth code from 1.0/oauth/authorize_app/app_id
+    #
+    # @param [string] auth_code The authorization code received from 
+    # /authorize_app to be used for authorization.
+    #
+    def self.authorize_with_authorization_code(auth_code)
+      consumer_token, consumer_secret, request_token, request_secret, verifier =
+          auth_code.split('|')
+      oauth = AWeber::OAuth.new(consumer_token, consumer_secret)
+
+      request_hash = {:oauth_token => request_token, :oauth_token_secret => request_secret}
+      request = ::OAuth::RequestToken.from_hash(oauth.consumer, request_hash)
+
+      oauth.request_token = request
+      oauth.authorize_with_verifier(verifier)
+      self.new(oauth)
+    end
+
   private
     
     def handle_errors(response, uri)

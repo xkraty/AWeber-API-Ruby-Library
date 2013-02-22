@@ -67,6 +67,24 @@ oauth = AWeber::OAuth.new('consumer_key', 'consumer_secret')
 oauth.authorize_with_access(YOUR_ACCESS_TOKEN, YOUR_ACCESS_TOKEN_SECRET)
 aweber = AWeber::Base.new(oauth)
 
+h3. I want to distribute my app as a public app
+
+If you intend to distribute your app to many AWeber customers via source code ("See here for more info":https://labs.aweber.com/getting_started/main#app_type), you will want to use the app id to authenticate your app as follows.
+
+h4. Build the authorize_app url:
+
+bc. require 'aweber'
+app_id = '1XXXXXXX8' #paste you app id from labs.aweber.com here
+auth_url = 'https://auth.aweber.com/1.0/oauth/authorize_app/' + app_id
+puts "please go to " + auth_url
+
+h4. Verification Code
+
+After you do the above step, it will output a “Verification Code”. Copy this into @authorize_with_authorization_code@
+
+bc. aweber = AWeber::Base.authorize_with_authorization_code('My|Authcode|Pasted|Here')
+
+You can now use the aweber object to access data from the account that authorized your app!
 
 h2. Usage
 
@@ -130,6 +148,8 @@ new_subscriber["email"] = "fake@example.com"
 new_subscriber["name"] = "My New Subscriber"
 aweber.account.lists.find_by_name("mylistname").subscribers.create(new_subscriber)
 #Or alternatively: aweber.account.lists[list_id].subscribers.create(new_subscriber)
+
+
 
 h2. Note on Patches/Pull Requests
  
