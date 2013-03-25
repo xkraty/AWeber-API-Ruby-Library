@@ -109,4 +109,18 @@ describe AWeber::Collection do
 
   end
 
+  describe "when finding" do
+    before do
+      @root       = AWeber::Collection.new(@aweber, FakeParent)
+      @parent     = AWeber::Resource.new(@aweber, :id => 1, :parent => @root)
+      @collection = AWeber::Collection.new(@aweber, FakeChild, :parent => @parent)
+    end
+
+    it "should call collection search and return its value" do
+        search_result = double('search')
+        @collection.stub(:search) { search }
+        @collection.should_receive(:search).and_return(search_result)
+        @collection.find(:name => "default123456")
+    end
+  end
 end
