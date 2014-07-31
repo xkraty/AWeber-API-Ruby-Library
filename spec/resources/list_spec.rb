@@ -10,6 +10,7 @@ describe AWeber::Resources::List do
   it { should respond_to :http_etag }
   it { should respond_to :id }
   it { should respond_to :name }
+  it { should respond_to :unique_list_id }
   it { should respond_to :resource_type_link }
   it { should respond_to :self_link }
   it { should respond_to :subscribers_collection_link }
