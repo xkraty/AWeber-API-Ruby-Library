@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe AWeber::Resources::Subscriber do
   include BaseObjects
   subject { aweber.account.lists[1].subscribers[50723026] }
-  
+
   it { should respond_to :ad_tracking }
   it { should respond_to :email }
   it { should respond_to :http_etag }
@@ -32,6 +32,7 @@ describe AWeber::Resources::Subscriber do
   its(:writable_attrs) { should include :custom_fields }
   its(:writable_attrs) { should include :ad_tracking }
   its(:writable_attrs) { should include :last_followup_message_number_sent }
+  its(:writable_attrs) { should include :tags }
 
   it "should move lists" do
     list = "http://api.aweber.com/1.0/accounts/1/lists/987654"
